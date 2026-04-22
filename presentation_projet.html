@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Présentation du projet — Assistant opérationnel artisans</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#f0ede8;color:#1a1a1a;padding:2.5rem 1rem;line-height:1.7}
+.page{max-width:780px;margin:0 auto}
+
+/* HEADER */
+.doc-header{background:#1a1a1a;color:#fff;padding:3rem 3rem 2.5rem;border-radius:16px 16px 0 0}
+.service-name{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.45);margin-bottom:10px}
+.doc-title{font-size:30px;font-weight:600;letter-spacing:-0.02em;margin-bottom:8px;line-height:1.2}
+.doc-sub{font-size:15px;color:rgba(255,255,255,0.55);margin-bottom:16px}
+.doc-meta{font-size:12px;color:rgba(255,255,255,0.35);font-family:'DM Mono',monospace}
+
+/* BODY */
+.doc-body{background:#fff;padding:0;border-radius:0 0 16px 16px;overflow:hidden}
+.section{padding:2.5rem 3rem;border-bottom:1px solid #f0f0ec}
+.section:last-child{border-bottom:none}
+.section-num{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#bbb;margin-bottom:8px}
+.section-title{font-size:18px;font-weight:600;color:#1a1a1a;margin-bottom:14px}
+.body-text{font-size:14px;color:#444;margin-bottom:12px;line-height:1.7}
+
+/* GRIDS */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0}
+.kpi-card{background:#f5f5f3;border-radius:10px;padding:14px 16px}
+.kpi-label{font-size:11px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px}
+.kpi-val{font-size:22px;font-weight:600;color:#1a1a1a;line-height:1.1;margin-bottom:4px}
+.kpi-sub{font-size:12px;color:#888;line-height:1.4}
+
+/* STEPS */
+.steps{margin:12px 0}
+.step{display:flex;gap:14px;margin-bottom:12px;align-items:flex-start}
+.step-n{width:28px;height:28px;border-radius:50%;background:#1a1a1a;color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step p{font-size:14px;color:#444;line-height:1.6;margin:0}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:16px 0}
+.price-card{border:1px solid #e8e8e8;border-radius:12px;padding:16px;text-align:center}
+.price-card.featured{border:2px solid #1a1a1a}
+.price-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:#888;margin-bottom:8px}
+.price-val{font-size:20px;font-weight:600;color:#1a1a1a;margin-bottom:6px}
+.price-desc{font-size:12px;color:#666;line-height:1.5}
+.price-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:2px 8px;border-radius:20px;background:#1a1a1a;color:#fff;margin-bottom:8px}
+
+/* SCENARIOS */
+.scenario{border:1px solid #e8e8e8;border-radius:12px;margin-bottom:10px;overflow:hidden}
+.scenario-header{padding:12px 16px;background:#f5f5f3;display:flex;justify-content:space-between;align-items:center}
+.scenario-title{font-size:14px;font-weight:600;color:#1a1a1a}
+.scenario-tag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.tag-ok{background:#EAF3DE;color:#27500A}
+.tag-warn{background:#FFF3CD;color:#856404}
+.tag-best{background:#E6F1FB;color:#0C447C}
+.scenario-body{padding:14px 16px}
+.scenario-row{display:flex;justify-content:space-between;font-size:13px;color:#555;padding:4px 0;border-bottom:1px solid #f5f5f3}
+.scenario-row:last-child{border-bottom:none;font-weight:600;color:#1a1a1a;font-size:14px;padding-top:8px}
+.scenario-note{font-size:12px;color:#888;margin-top:8px;font-style:italic}
+
+/* PALIERS */
+.palier{border:1px solid #e8e8e8;border-radius:12px;padding:16px;margin-bottom:10px}
+.palier-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.palier-title{font-size:15px;font-weight:600;color:#1a1a1a}
+.palier-period{font-size:12px;color:#888}
+.palier-desc{font-size:13px;color:#555;margin-bottom:10px;line-height:1.5}
+.metrics-row{display:flex;gap:20px;flex-wrap:wrap}
+.metric{font-size:12px;color:#888}
+.metric span{font-weight:600;color:#1a1a1a}
+
+/* BOXES */
+.highlight{background:#E6F1FB;border-left:3px solid #185FA5;border-radius:0 8px 8px 0;padding:10px 14px;font-size:13px;color:#0C447C;line-height:1.6;margin:10px 0}
+.warning-box{background:#FFF7ED;border-left:3px solid #D97706;border-radius:0 8px 8px 0;padding:10px 14px;font-size:13px;color:#633806;line-height:1.6;margin:10px 0}
+.success-box{background:#EAF3DE;border-left:3px solid #2d9e5c;border-radius:0 8px 8px 0;padding:10px 14px;font-size:13px;color:#145a2a;line-height:1.6;margin:10px 0}
+
+/* PILLS */
+.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.pill{font-size:12px;padding:4px 12px;border-radius:20px;border:1px solid #ddd;color:#555;background:#f9f9f7}
+.pill.neg{border-color:#f5a0a0;color:#A32D2D;background:#FCEBEB}
+
+/* RÈGLES */
+.rules{margin:10px 0}
+.rule-item{display:flex;gap:10px;align-items:flex-start;padding:6px 0;font-size:13px;color:#444;border-bottom:1px solid #f5f5f3}
+.rule-item:last-child{border-bottom:none}
+.rule-icon{width:18px;height:18px;border-radius:50%;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.rule-ok{background:#EAF3DE;color:#27500A}
+.rule-no{background:#FCEBEB;color:#A32D2D}
+
+@media(max-width:580px){.grid-2,.grid-3,.pricing-grid{grid-template-columns:1fr}.section{padding:1.75rem 1.5rem}.doc-header{padding:2rem 1.5rem}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="doc-header">
+    <div class="service-name">[NOM DU SERVICE]</div>
+    <div class="doc-title">Assistant opérationnel pour artisans</div>
+    <div class="doc-sub">Plombiers · Chauffagistes · Paris</div>
+    <div class="doc-meta">Présentation de projet · Version 2.0 · <span id="doc_date"></span></div>
+  </div>
+
+  <div class="doc-body">
+
+    <!-- 1. LE PROJET -->
+    <div class="section">
+      <div class="section-num">Le projet</div>
+      <div class="section-title">Un canal d'acquisition et un optimiseur de revenu pour artisans solo</div>
+      <p class="body-text">Un service d'assistance opérationnelle pour artisans plombiers et chauffagistes parisiens. Il répond aux appels manqués, tient le planning et prépare les devis simples. Le client final pense parler au secrétariat de l'artisan.</p>
+      <p class="body-text" style="color:#888;font-size:13px">Phase 1 : un quartier parisien. Opéré seul. MVP sur Google Sheets avec automatisations Google Calendar et WhatsApp.</p>
+      <div class="highlight">Le positionnement n'est pas "secrétariat externalisé". C'est un canal d'acquisition qui contrôle le point d'entrée client — et se rémunère sur la valeur créée, pas sur le temps passé.</div>
+    </div>
+
+    <!-- 2. LE PROBLÈME -->
+    <div class="section">
+      <div class="section-num">Le problème adressé</div>
+      <div class="section-title">Une perte silencieuse et quotidienne</div>
+      <p class="body-text">Un artisan solo passe ses journées en intervention. Son téléphone sonne, il ne peut pas répondre. Le client attend 10 secondes, raccroche, appelle le suivant. L'artisan ne sait jamais ce qu'il a perdu.</p>
+      <div class="grid-2">
+        <div class="kpi-card">
+          <div class="kpi-label">Appels manqués estimés</div>
+          <div class="kpi-val">20–30%</div>
+          <div class="kpi-sub">des appels reçus par un artisan actif en intervention</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Coût secrétaire mi-temps</div>
+          <div class="kpi-val">2 500 €</div>
+          <div class="kpi-sub">par mois charges comprises — inaccessible pour un artisan solo</div>
+        </div>
+      </div>
+      <p class="body-text">À cela s'ajoute la désorganisation du planning, la charge mentale de gérer seul l'administratif et le terrain, et l'absence totale de traçabilité sur l'activité.</p>
+    </div>
+
+    <!-- 3. CE QUE ÇA FAIT -->
+    <div class="section">
+      <div class="section-num">Le service</div>
+      <div class="section-title">Ce qui se passe concrètement</div>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><p>L'artisan active le transfert d'appel le matin (#61#). Après 4 sonneries sans réponse, l'appel arrive au service. Rappel automatique chaque matin et chaque soir.</p></div>
+        <div class="step"><div class="step-n">2</div><p>La demande est qualifiée en temps réel : type d'intervention, urgence, localisation, client nouveau ou existant. Un outil de diagnostic structure la qualification.</p></div>
+        <div class="step"><div class="step-n">3</div><p>Un créneau est proposé selon le planning réel de l'artisan. Pour les interventions standardisées, une fourchette de prix est annoncée directement. Pour les cas complexes, visite technique organisée.</p></div>
+        <div class="step"><div class="step-n">4</div><p>L'artisan reçoit un résumé WhatsApp complet : client, adresse, contexte, tarif estimé. L'intervention est ajoutée automatiquement à son Google Calendar dédié.</p></div>
+        <div class="step"><div class="step-n">5</div><p>Chaque intervention est tracée dans le système. Un rapport mensuel est transmis à l'artisan : missions reçues, CA généré, commission prélevée, score de réactivité.</p></div>
+      </div>
+    </div>
+
+    <!-- 4. MODÈLE ÉCONOMIQUE -->
+    <div class="section">
+      <div class="section-num">Modèle économique</div>
+      <div class="section-title">Une structure simple, lisible, défendable</div>
+      <p class="body-text">Le modèle repose sur deux principes : friction d'entrée faible, capture de valeur sur le résultat. La commission est modulée selon qui crée réellement la valeur.</p>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="price-label">Forfait mensuel</div>
+          <div class="price-val">79 €/mois</div>
+          <div class="price-desc">Prise d'appels, qualification, planning, WhatsApp, Calendar. Gratuit les 2 premiers mois.</div>
+        </div>
+        <div class="price-card featured">
+          <div class="price-badge">Cœur du modèle</div>
+          <div class="price-label">Commission nouveaux clients</div>
+          <div class="price-val">20 % / 12 %</div>
+          <div class="price-desc">20 % sur interventions ≤ 300 € · 12 % au-delà. Uniquement sur les clients captés pendant une indisponibilité.</div>
+        </div>
+        <div class="price-card">
+          <div class="price-label">Dispatch réseau</div>
+          <div class="price-val">25 %</div>
+          <div class="price-desc">Mission redirigée vers un autre artisan du réseau. Mission qui était 0 € sans le service.</div>
+        </div>
+      </div>
+
+      <div class="rules">
+        <div class="rule-item"><div class="rule-icon rule-ok">✓</div><span>Clients existants de l'artisan : 0 % de commission — toujours</span></div>
+        <div class="rule-item"><div class="rule-icon rule-ok">✓</div><span>Client = attribué à l'entrée dans le système, pas à la déclaration a posteriori</span></div>
+        <div class="rule-item"><div class="rule-icon rule-ok">✓</div><span>Clause 12 mois : commission applicable si le client capté recontacte directement dans l'année</span></div>
+        <div class="rule-item"><div class="rule-icon rule-no">✗</div><span>Pas de hausse du forfait sans accord préalable — aucune surprise tarifaire</span></div>
+      </div>
+
+      <div class="warning-box">La commission n'est pas "ce que je prends". C'est le prix d'un client que l'artisan n'aurait pas eu. Sans le service : 0 €. Avec le service : il garde 80 à 88 % du CA généré.</div>
+    </div>
+
+    <!-- 5. SCÉNARIOS -->
+    <div class="section">
+      <div class="section-num">Économie du modèle</div>
+      <div class="section-title">Scénarios réalistes — hypothèses transparentes</div>
+      <p class="body-text" style="color:#888;font-size:13px;margin-bottom:14px">Base : panier moyen 220 €. 40 à 50 % des missions interceptées = nouveaux clients (le reste = clients existants à 0 % commission). Ces chiffres sont conservateurs.</p>
+
+      <div class="scenario">
+        <div class="scenario-header">
+          <span class="scenario-title">Scénario A — Artisan faible traction</span>
+          <span class="scenario-tag tag-warn">Borderline</span>
+        </div>
+        <div class="scenario-body">
+          <div class="scenario-row"><span>Missions interceptées / mois</span><span>4</span></div>
+          <div class="scenario-row"><span>Dont nouveaux clients (50 %)</span><span>2 × 220 €</span></div>
+          <div class="scenario-row"><span>Commission (20 %)</span><span>88 €</span></div>
+          <div class="scenario-row"><span>Forfait</span><span>79 €</span></div>
+          <div class="scenario-row"><span>Total pour le service</span><span>167 €</span></div>
+          <div class="scenario-note">Artisan gagne ~440 € brut sur ces missions. Coût d'acquisition client via le service : 83 €. Acceptable si l'artisan perçoit la valeur — fragile sinon.</div>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-header">
+          <span class="scenario-title">Scénario B — Artisan cœur de cible</span>
+          <span class="scenario-tag tag-ok">Optimal</span>
+        </div>
+        <div class="scenario-body">
+          <div class="scenario-row"><span>Missions interceptées / mois</span><span>8</span></div>
+          <div class="scenario-row"><span>Dont nouveaux clients (50 %)</span><span>4 × 220 €</span></div>
+          <div class="scenario-row"><span>Commission (18 % moyen)</span><span>158 €</span></div>
+          <div class="scenario-row"><span>Forfait</span><span>79 €</span></div>
+          <div class="scenario-row"><span>Total pour le service</span><span>237 €</span></div>
+          <div class="scenario-note">Artisan génère ~880 € de marge brute. Le service représente 27 % de ce CA additionnel. Équilibre sain — c'est ici que le modèle est défendable et stable.</div>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-header">
+          <span class="scenario-title">Scénario C — Artisan performant</span>
+          <span class="scenario-tag tag-best">Rentable</span>
+        </div>
+        <div class="scenario-body">
+          <div class="scenario-row"><span>Missions interceptées / mois</span><span>12</span></div>
+          <div class="scenario-row"><span>Dont nouveaux clients (50 %)</span><span>6 × 220 €</span></div>
+          <div class="scenario-row"><span>Commission (17 % moyen)</span><span>224 €</span></div>
+          <div class="scenario-row"><span>Forfait</span><span>79 €</span></div>
+          <div class="scenario-row"><span>Total pour le service</span><span>303 €</span></div>
+          <div class="scenario-note">Au-delà de 400 €/mois de commission, transition vers un forfait premium à 199 €/mois avec commission réduite à 10 % fixe — règle annoncée dès le départ dans le contrat.</div>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-header">
+          <span class="scenario-title">Scénario D — Dispatch réseau (bonus)</span>
+          <span class="scenario-tag tag-ok">Pur bonus</span>
+        </div>
+        <div class="scenario-body">
+          <div class="scenario-row"><span>Missions dispatchées / mois</span><span>4 × 220 €</span></div>
+          <div class="scenario-row"><span>Commission dispatch (25 %)</span><span>220 €</span></div>
+          <div class="scenario-row"><span>Acquisition nécessaire</span><span>0 €</span></div>
+          <div class="scenario-row"><span>Bonus net</span><span>220 €</span></div>
+          <div class="scenario-note">Revenue généré par l'optimisation du réseau. Chaque mission refusée par un artisan devient une opportunité plutôt qu'une perte sèche.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. RÉSEAU -->
+    <div class="section">
+      <div class="section-num">Le réseau de mutualisation</div>
+      <div class="section-title">Transformer les refus en opportunités</div>
+      <p class="body-text">Quand un artisan ne peut pas prendre une mission — zone trop éloignée, créneau indisponible, intervention hors compétence — la demande est redirigée vers un autre artisan du réseau. En contrepartie, il reçoit des missions similaires refusées par ses pairs.</p>
+      <div class="highlight">C'est ce mécanisme qui rend le service indispensable dans le temps. Plus le réseau est dense, plus chaque artisan reçoit. Un artisan qui quitte le réseau perd l'accès à ce flux entrant.</div>
+      <div class="rules" style="margin-top:12px">
+        <div class="rule-item"><div class="rule-icon rule-no">✗</div><span>Jamais sur un client historique de l'artisan</span></div>
+        <div class="rule-item"><div class="rule-icon rule-ok">✓</div><span>Accord préalable explicite pour chaque réassignation</span></div>
+        <div class="rule-item"><div class="rule-icon rule-ok">✓</div><span>Logique réciproque : qui ne donne pas ne reçoit pas</span></div>
+        <div class="rule-item"><div class="rule-icon rule-ok">✓</div><span>Commission dispatch 25 % — "marché d'opportunité", pas commission standard</span></div>
+      </div>
+    </div>
+
+    <!-- 7. CE QUE CE N'EST PAS -->
+    <div class="section">
+      <div class="section-num">Périmètre</div>
+      <div class="section-title">Ce que ce n'est pas</div>
+      <div class="pill-row">
+        <span class="pill neg">Pas une marketplace</span>
+        <span class="pill neg">Pas visible du client final</span>
+        <span class="pill neg">Pas un agenda parfait</span>
+        <span class="pill neg">Pas une estimation toujours exacte</span>
+        <span class="pill neg">Pas un preneur de contrôle client</span>
+      </div>
+      <p class="body-text">Le service améliore significativement l'existant sans prétendre le supprimer. L'artisan garde la main sur ses clients, sa relation et son activité.</p>
+      <div class="success-box">Le vrai actif construit sur la durée n'est pas le standard téléphonique — c'est la base de données opérationnelle : types d'interventions, comportements artisans, ratios estimation/réel. C'est ce qui rend le service difficile à répliquer à terme.</div>
+    </div>
+
+    <!-- 8. PALIERS -->
+    <div class="section">
+      <div class="section-num">Projections de croissance</div>
+      <div class="section-title">Paliers réalistes — déclencheurs, pas objectifs</div>
+      <p class="body-text" style="color:#888;font-size:13px;margin-bottom:14px">Chaque palier se déclenche sur la dégradation mesurable du service, pas sur une ambition de volume.</p>
+
+      <div class="palier">
+        <div class="palier-head">
+          <span class="palier-title">Palier 1 — Démarrage solo</span>
+          <span class="palier-period">Mois 1 à 6</span>
+        </div>
+        <div class="palier-desc">Un quartier parisien. 3 à 5 artisans. L'objectif n'est pas la rentabilité — c'est la validation du modèle en conditions réelles : ratio nouveaux/existants, fiabilité artisan, qualité des estimations.</div>
+        <div class="metrics-row">
+          <div class="metric">Artisans : <span>3 – 5</span></div>
+          <div class="metric">Revenu estimé : <span>700 – 1 500 €/mois</span></div>
+          <div class="metric">Charge : <span>~3h/jour</span></div>
+        </div>
+      </div>
+
+      <div class="palier">
+        <div class="palier-head">
+          <span class="palier-title">Palier 2 — Extension quartier → arrondissement</span>
+          <span class="palier-period">Mois 6 à 18</span>
+        </div>
+        <div class="palier-desc">Le réseau de mutualisation commence à avoir de la valeur réelle. Le dispatch génère du revenu sans acquisition. 8 à 12 artisans représentent la limite haute opérable seul.</div>
+        <div class="metrics-row">
+          <div class="metric">Artisans : <span>8 – 12</span></div>
+          <div class="metric">Revenu estimé : <span>2 500 – 4 500 €/mois</span></div>
+          <div class="metric">Charge : <span>6 – 8h/jour</span></div>
+        </div>
+      </div>
+
+      <div class="palier">
+        <div class="palier-head">
+          <span class="palier-title">Palier 3 — Premier collaborateur</span>
+          <span class="palier-period">Mois 12 à 24 selon rythme</span>
+        </div>
+        <div class="palier-desc">Déclencheur : dégradation visible — appels mal traités, délais qui s'allongent. Un collaborateur formé double la capacité. Le numéro centralisé devient le point d'entrée unique pour tous les appels artisan.</div>
+        <div class="metrics-row">
+          <div class="metric">Artisans : <span>20 – 25</span></div>
+          <div class="metric">Revenu estimé : <span>6 000 – 10 000 €/mois</span></div>
+          <div class="metric">Masse salariale : <span>~2 500 €/mois</span></div>
+        </div>
+      </div>
+
+      <div class="palier">
+        <div class="palier-head">
+          <span class="palier-title">Palier 4 — Infrastructure et automatisation</span>
+          <span class="palier-period">Au-delà de 18 mois</span>
+        </div>
+        <div class="palier-desc">Qualification des appels, dispatch et génération de devis progressivement automatisés. Le rôle bascule vers la supervision et le développement commercial. Logique plateforme — contrôle du point d'entrée client à l'échelle.</div>
+        <div class="metrics-row">
+          <div class="metric">Artisans : <span>40+</span></div>
+          <div class="metric">Revenu potentiel : <span>20 000 €+/mois</span></div>
+          <div class="metric">Modèle : <span>SaaS + commission</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. LIMITES -->
+    <div class="section">
+      <div class="section-num">Limites et risques</div>
+      <div class="section-title">Ce qu'il faut accepter avant de commencer</div>
+      <div class="pill-row">
+        <span class="pill neg">Dépendance totale au comportement artisan</span>
+        <span class="pill neg">Volume de captation modéré par artisan seul</span>
+        <span class="pill neg">Connaissance technique à renforcer</span>
+        <span class="pill neg">Charge opérationnelle limitée ~10 artisans solo</span>
+        <span class="pill neg">Pas de protection contractuelle forte sur la désintermédiation</span>
+      </div>
+      <div class="warning-box">Le risque principal à 3 mois : un incident artisan mal géré en phase de lancement détruit la crédibilité avant que le réseau soit constitué. La sélection des premiers artisans est la décision la plus importante du projet.</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.getElementById('doc_date').textContent = new Date().toLocaleDateString('fr-FR', {month:'long', year:'numeric'});
+</script>
+</body>
+</html>
